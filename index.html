@@ -1,0 +1,78 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive 3D Model</title>
+    <link rel="stylesheet" href="src/output.css">
+<style type="text/css" id="operaUserStyle"></style></head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <div class="fixed w-full">
+        <nav class="bg-white shadow-md backdrop-filter backdrop-blur-md bg-opacity-30 border-b border-gray-200">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <!-- Logo -->
+                <div class="text-2xl font-bold text-gray-800">
+                    <a href="#">Logo</a>
+                </div>
+                <!-- Navigation Links -->
+                <div class="hidden md:flex space-x-6">
+                    <a href="#header" class="text-gray-600 hover:text-gray-900">Home</a>
+                    <a href="#model" class="text-gray-600 hover:text-gray-900">Model</a>
+                    <a href="#empty-section" class="text-gray-600 hover:text-gray-900">Section</a>
+                    <a href="#footer" class="text-gray-600 hover:text-gray-900">Footer</a>
+                </div>
+                <!-- Button -->
+                <div>
+                    <button type="button" class="bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 active:bg-violet-800 px-5 py-2 text-sm leading-5 rounded-full font-semibold text-white">
+                        Hover me
+                    </button>
+                </div>
+                <!-- Mobile Menu Icon -->
+                <button id="menu-toggle" class="md:hidden text-gray-600 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden">
+                <a href="#header" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Home</a>
+                <a href="#model" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Model</a>
+                <a href="#empty-section" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Section</a>
+                <a href="#footer" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Footer</a>
+            </div>
+        </nav>
+    </div>    
+    <!-- Scene Container -->
+    <div id="scene-container" class="p-8">
+        <div id="header">
+            <h1 class="text-4xl font-bold text-gray-800">Hello World</h1>
+        </div>
+        <div id="model" class="my-8">
+            <!-- Placeholder for your 3D model -->
+        </div>
+    </div>
+    
+    <!-- Empty Section -->
+    <section id="empty-section" class="py-12 bg-gray-50">
+        <h2 class="text-2xl font-semibold text-gray-800">Another Section</h2>
+    </section>
+    
+    <!-- Footer -->
+    <footer id="footer" class="bg-gray-800 py-4">
+        <p class="text-center text-white">© 2024 Your Website</p>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById("menu-toggle");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        menuToggle.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+    </script>
+
+
+</body></html>
