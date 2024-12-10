@@ -1,21 +1,32 @@
-<html lang="en"><head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive 3D Model</title>
     <link rel="stylesheet" href="src/output.css">
-<style type="text/css" id="operaUserStyle"></style></head>
+<style type="text/css" id="operaUserStyle"></style>
+<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@v0.163.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@v0.163.0/examples/jsm/"
+        }
+      }
+    </script>
+</head>
 <body class="bg-gray-100">
 
     <!-- Navbar -->
-    <div class="fixed w-full">
-        <nav class="bg-white shadow-md backdrop-filter backdrop-blur-md bg-opacity-30 border-b border-gray-200">
+    <div class="fixed w-full z-10">
+        <nav class="light:bg-white shadow-md backdrop-filter backdrop-blur-md bg-opacity-30 border-b border-gray-200">
             <div class="container mx-auto px-4 py-4 flex justify-between items-center">
                 <!-- Logo -->
-                <div class="text-2xl font-bold text-gray-800">
+                <div class="text-2xl font-bold text-white">
                     <a href="#">Logo</a>
                 </div>
                 <!-- Navigation Links -->
-                <div class="hidden md:flex space-x-6">
+                <div class="hidden md:flex space-x-6 text-">
                     <a href="#header" class="text-gray-600 hover:text-gray-900">Home</a>
                     <a href="#model" class="text-gray-600 hover:text-gray-900">Model</a>
                     <a href="#empty-section" class="text-gray-600 hover:text-gray-900">Section</a>
@@ -44,15 +55,22 @@
         </nav>
     </div>    
     <!-- Scene Container -->
-    <div id="scene-container" class="p-8">
-        <div id="header">
-            <h1 class="text-4xl font-bold text-gray-800">Hello World</h1>
+    <div id="header" style="margin-left: 0rem;">
+        <!-- Text Overlay -->
+        <div class="relative">
+            <div class="absolute z-10" id="text-overlay">
+                <h1 class="text-6xl font-bold text-white">Hello World</h1>
+            </div>
         </div>
-        <div id="model" class="my-8">
-            <!-- Placeholder for your 3D model -->
+        <div id="progress-container">
+            <div id="progress">Engaging Hyperdrive...</div>
+        </div>
+        <div id="model" style="width: 100%;">
+            <!-- Three.js Canvas -->
+            <script type="module" src="./main.js"></script>
         </div>
     </div>
-    
+        
     <!-- Empty Section -->
     <section id="empty-section" class="py-12 bg-gray-50">
         <h2 class="text-2xl font-semibold text-gray-800">Another Section</h2>
@@ -63,7 +81,6 @@
         <p class="text-center text-white">© 2024 Your Website</p>
     </footer>
 
-    <script src="main.js"></script>
     <script>
         // Mobile Menu Toggle
         const menuToggle = document.getElementById("menu-toggle");
