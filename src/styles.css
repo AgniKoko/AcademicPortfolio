@@ -8,19 +8,10 @@ body {
     overflow-x: hidden;
 }
 
-/* a {
-    color: inherit;
-    text-decoration: inherit;
-} */
-
 #header {
-    position: relative;
-    height: 100vh; /* Full viewport height */
-    overflow: hidden;
-    background: black; /* Ensure background is black */
-    padding: 0%;
-    margin-left: 0rem;
-  }
+  background: black;
+}
+
 #header h1 {
     font-size: 3rem;
     color: #333;
@@ -46,63 +37,67 @@ body {
 
 #empty-section h2 {
     font-size: 2rem;
-    color: #555;
+    /* color: #555; */
 }
+
 
 #model {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1; 
+}
+
+#beamLightContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2; 
+}
+
 
 #scene-container {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    background-color: black; 
-    overflow: hidden;
-  }
-  
-  #model canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  
-  /* Style the "Hello World" text */
-  #hello-text {
-    font-size: 4rem;
-    color: white;
-    z-index: 10;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
-  }
-  
-  /* Center and slightly left-align the text */
-#text-overlay {
-  top: 50%; /* Center vertically */
-  left: 10%; /* Slightly offset to the left */
-  transform: translateY(-50%); /* Adjust for perfect vertical centering */
-  text-align: left;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: black; 
+  overflow: hidden;
 }
 
-#text-overlay h1 {
+#model canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#hello-text {
   font-size: 4rem;
   color: white;
+  z-index: 10;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
-  margin: 0;
+}
+  
+#text-overlay {
+  left: 10%; 
 }
 
-  #progress-container {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
+#progress-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#gradient-canvas {
+  width:100%;
+  height:100%;
+  --gradient-color-1: #1a293c; 
+  --gradient-color-2: #0d141a; 
+  --gradient-color-3: #0c1012;  
+  --gradient-color-4: #06070b;
+}
