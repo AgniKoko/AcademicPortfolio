@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import Smoke from './smoke.js';
 
 const modelContainer = document.getElementById('model');
 
@@ -61,7 +62,8 @@ scene.add(background);
 const ambientLight = new THREE.AmbientLight(0x222222, 1); //0x222222 0x753338
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0x526682, 5);
+const directionalLight = new THREE.DirectionalLight(0x748db1, 7); //0x526682 0x748db1
+// directionalLight.position.set(-35, 10, 3);
 directionalLight.position.set(-35, 10, 3);
 directionalLight.castShadow = true;
 directionalLight.shadow.radius = 8;  // Increase this value for softer shadows
@@ -80,19 +82,6 @@ scene.add(directionalLight);
 
 const directionalRightLight = new THREE.DirectionalLight(0x753338, 4);
 directionalRightLight.position.set(10, -2, -7);
-// directionalRightLight.castShadow = true;
-directionalRightLight.shadow.radius = 8;  // Increase this value for softer shadows
-directionalRightLight.penumbra = 1;  // Increase for more softness (0 = hard shadow, 1 = fully soft)
-directionalRightLight.shadow.mapSize.width = 2048; 
-directionalRightLight.shadow.mapSize.height = 2048;
-directionalRightLight.shadow.camera.near = 1; // Start of shadow camera
-directionalRightLight.shadow.camera.far = 40; // End of shadow camera
-directionalRightLight.shadow.camera.left = -10; // Boundary of shadow camera
-directionalRightLight.shadow.camera.right = 10;
-directionalRightLight.shadow.camera.top = 10;
-directionalRightLight.shadow.camera.bottom = -10;
-directionalRightLight.shadow.bias = -0.005; // Fine-tune this value
-directionalRightLight.shadow.normalBias = 0.05; // Helps with uneven geometry
 scene.add(directionalRightLight);
 
 // const lightHelper = new THREE.SpotLightHelper(spotLight);
@@ -121,18 +110,13 @@ scene.add(beamLight.target);
 const beamHeight = 50; 
 const beamRadius = 5; 
 const coneGeometry = new THREE.ConeGeometry(beamRadius, beamHeight, 32, 1, true);
-const coneMaterial = new THREE.MeshBasicMaterial({
-  color: 0xa2b1c5,
-  transparent: true,
-  opacity: 0.25,
-  side: THREE.DoubleSide,
-});
 
 const beamMaterial = new THREE.ShaderMaterial({
+  // opacity: 0.1,
   transparent: true,
   uniforms: {
     beamColor: { value: new THREE.Color(0xa2b1c5) }, // Color of the foggy beam
-    opacity: { value: 0.2 }, // Adjust opacity for subtle fog
+    opacity: { value: 0.09 }, // Adjust opacity for subtle fog
     beamHeight: { value: beamHeight },
   },
   vertexShader: `
@@ -160,6 +144,52 @@ const beam = new THREE.Mesh(coneGeometry, beamMaterial);
 beam.position.copy(beamLight.position); 
 beam.lookAt(beamLight.target.position); 
 scene.add(beam);
+
+// const smoke = new Smoke(scene, camera, renderer);
+// document.addEventListener('DOMContentLoaded', () => {
+//   const smokeCanvas = document.querySelector('.js-smoke');
+
+//   if (!smokeCanvas) {
+//     console.error('Element with class ".js-smoke" not found!');
+//     return;
+//   }
+
+//   const smoke2 = new Smoke(smokeCanvas);
+//   smoke2.update(); // Start the smoke animation
+// });
+
+// Smoke Effect
+const smokeParticles = [];
+const textureLoader = new THREE.TextureLoader();
+
+textureLoader.load('./src/img/clouds.png', (texture) => {
+  const smokeMaterial = new THREE.MeshBasicMaterial({
+    map: texture,
+    color: 0x526682,
+    transparent: true,
+    opacity: 0.05, // Mild smoke effect
+    depthWrite: false, // Fix for transparency blending
+  });
+
+  const smokeGeometry = new THREE.PlaneGeometry(5, 5); // Adjust size as needed
+
+  for (let i = 0; i < 90; i++) { // Add 30 particles
+    const smokeMesh = new THREE.Mesh(smokeGeometry, smokeMaterial);
+
+    // Position smoke only on the left side of the screen
+    smokeMesh.position.set(
+      Math.random() * 7 + -4, // X: Left side (-2 to -7 range)
+      Math.random() * 4 + -1, // Y: Vertically centered (-1.5 to 1.5)
+      Math.random() * 6 + 3 // Z: Shift forward (2 to 5)
+    );
+
+    // Random rotation
+    smokeMesh.rotation.z = Math.random() * Math.PI * 2;
+
+    scene.add(smokeMesh);
+    smokeParticles.push(smokeMesh);
+  }
+});
 
 // const loader = new GLTFLoader().setPath('src/millennium_falcon/');
 // loader.load('scene.gltf', (gltf) => {
@@ -207,18 +237,39 @@ window.addEventListener('scroll', () => {
   camera.position.y = 2 - scrollProgress * 1.5; // Slight downward shift
 
   // Light intensity changes
-  spotLight.intensity = 5 - scrollProgress * 4.5; // Dim light
+  directionalLight.intensity = 5 - scrollProgress * 4.5; // Dim light
   ambientLight.intensity = 1 - scrollProgress * 0.8;
 
   // Adjust light position for effect
-  spotLight.position.y = 10 - scrollProgress * 5;
+  directionalLight.position.y = 10 - scrollProgress * 5;
 });
+
+const clock = new THREE.Clock();
+const clockSpeed = 0.9; // Lower values for slower animation
+
 function animate() {
   requestAnimationFrame(animate);
+
+  // Calculate elapsed time
+  const elapsedTime = clock.getElapsedTime();
+
+  // Update directional light intensity with a sine wave
+  const lightIntensity = 4 + Math.sin(elapsedTime * clockSpeed) * 3; // Oscillates between 1 and 7
+  directionalLight.intensity = lightIntensity;
+
+  // Synchronize beam opacity with the directional light
+  const beamOpacity = (Math.sin(elapsedTime * clockSpeed) + 1) / 2 * 0.09; // Oscillates between 0.0 and 0.05
+  beamMaterial.uniforms.opacity.value = beamOpacity; // Update beam opacity
+
+  // Rotate smoke particles for animation
+  smokeParticles.forEach((particle) => {
+    particle.rotation.z += 0.0018; // Slow rotation
+  });
+  
   if (mesh) {
-    // Rotate statue slightly for subtle effect
     mesh.rotation.y += 0.001;
   }
+  // smoke.update();
   controls.update();
   lightHelper.update(); 
   renderer.render(scene, camera);

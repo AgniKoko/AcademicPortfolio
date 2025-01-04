@@ -18,7 +18,7 @@
 <body class="bg-gray-100">
 
     <!-- Navbar -->
-    <div class="fixed w-full z-10">
+    <div class="fixed w-full" style="z-index: 50;">
         <nav class="shadow-md backdrop-filter backdrop-blur-md bg-opacity-30 border-b border-gray-200">
             <div class="container mx-auto px-4 py-4 flex justify-between items-center">
                 <!-- Logo -->
@@ -57,17 +57,14 @@
 
     <!-- Scene Container -->
     <section id="empty-section" class="bg-gray-50" style="justify-content: left;">
-        <div class="absolute z-10" style="margin: 10%;">
-            <h2 class="text-6xl font-semibold text-primary">Hello World</h2>
-            <p class="text-left text-textReal">My Website</p>
+        <div class="absolute z-10 content-section" style="margin: 15%;">
+            <h2 class="text-6xl font-semibold text-primary" style="font-size: 4rem;">Hello World</h2>
+            <p class="text-left text-textReal" style="font-size: 2rem;">My Website</p>
         </div>
-        <div id="model" style="width: 100%;">
-            <script type="module" src="./main.js"></script>
-        </div>
-        
-        <div id="beamLightContainer">
-            <script type="module" src="./main.js"></script>
-        </div>
+        <div id="model" style="width: 100%;"></div>
+        <!-- <canvas class="js-smoke" style="width: 100%; height: 100%;"></canvas>         -->
+
+        <script type="module" src="./main.js"></script>
     </section>
 
     <!-- Empty Section -->
