@@ -145,19 +145,6 @@ beam.position.copy(beamLight.position);
 beam.lookAt(beamLight.target.position); 
 scene.add(beam);
 
-// const smoke = new Smoke(scene, camera, renderer);
-// document.addEventListener('DOMContentLoaded', () => {
-//   const smokeCanvas = document.querySelector('.js-smoke');
-
-//   if (!smokeCanvas) {
-//     console.error('Element with class ".js-smoke" not found!');
-//     return;
-//   }
-
-//   const smoke2 = new Smoke(smokeCanvas);
-//   smoke2.update(); // Start the smoke animation
-// });
-
 // Smoke Effect
 const smokeParticles = [];
 const textureLoader = new THREE.TextureLoader();
@@ -191,8 +178,7 @@ textureLoader.load('./src/img/clouds.png', (texture) => {
   }
 });
 
-// const loader = new GLTFLoader().setPath('src/millennium_falcon/');
-// loader.load('scene.gltf', (gltf) => {
+
 let mesh;
 const loader = new GLTFLoader().setPath('src/democritus/');
 loader.load('democritus.glb', (gltf) => {
@@ -204,8 +190,6 @@ loader.load('democritus.glb', (gltf) => {
       child.castShadow = true;
       child.receiveShadow = true;
       child.geometry.computeVertexNormals();
-      // child.material.roughness = 0.7; // Lower roughness for shinier surface
-      // child.material.metalness = 0.5; // Add slight reflectivity
     }
   });
   
@@ -267,7 +251,8 @@ function animate() {
   });
   
   if (mesh) {
-    mesh.rotation.y += 0.001;
+    //mesh.rotation.y += 0.001;
+    mesh.position.y = Math.sin(elapsedTime * clockSpeed) * 0.04; 
   }
   // smoke.update();
   controls.update();

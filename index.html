@@ -5,6 +5,8 @@
     <title>Interactive 3D Model</title>
     <link rel="stylesheet" href="src/output.css">
 <style type="text/css" id="operaUserStyle"></style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
     <script type="importmap">
       {
@@ -61,7 +63,7 @@
             <h2 class="text-6xl font-semibold text-primary" style="font-size: 4rem;">Hello World</h2>
             <p class="text-left text-textReal" style="font-size: 2rem;">My Website</p>
         </div>
-        <div id="model" style="width: 100%;"></div>
+        <div id="model" style="width: 100%; position: fixed;"></div>
         <!-- <canvas class="js-smoke" style="width: 100%; height: 100%;"></canvas>         -->
 
         <script type="module" src="./main.js"></script>

@@ -22,21 +22,12 @@ body {
   margin-left: 0rem;
 }
 
-#model {
-    width: 70%;
-    height: 100%;
-}
-
 #empty-section {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #e8e8e8;
-}
-
-.content-section {
-  margin: 15%;
 }
 
 #empty-section h2 {
@@ -67,10 +58,13 @@ body {
   overflow: hidden;
 }
 
+.content-section {
+  margin: 15%;
+}
+
 #model canvas {
   width: 100%;
   height: 100%;
-  position: fixed;
   top: 0;
   left: 0;
 }
